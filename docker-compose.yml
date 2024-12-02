@@ -3,18 +3,21 @@ version: "3.9"
 services:
   comfyui:
     user: "1000:1000"
-    build: .
+    image: a624669980/comfyui:latest-cu121
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
     deploy:
       resources:
         reservations:
           devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+            - capabilities:
+              - gpu
     ports:
       - "8188:8188"
     volumes:
-      - "./models:/app/models"
-      - "./input:/app/input"
-      - "./temp:/app/output/temp"
-      - "./output:/app/output"
+      - "/DATA/comfyui/models:/app/models"
+      - "/DATA/comfyui/input:/app/input"
+      - "/DATA/comfyui/temp:/app/output/temp"
+      - "/DATA/comfyui/output:/app/output"
+      
+
